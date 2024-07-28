@@ -1,0 +1,324 @@
+<html>
+  <head>
+    <title>Unassign</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://static.freshdev.io/fdk/2.0/assets/freshsales.css"
+    />
+    <link rel="stylesheet" type="text/css" href="./assets/iparams.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://static.freshdev.io/fdk/2.0/assets/freshworks_crm.css"
+    />
+    <link rel="stylesheet" type="text/css" href="./assets/iparams.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="[style path]/simditor.css" />
+    <script type="text/javascript" src="[script path]/jquery.min.js"></script>
+    <script type="text/javascript" src="[script path]/module.js"></script>
+    <script type="text/javascript" src="[script path]/hotkeys.js"></script>
+    <script type="text/javascript" src="[script path]/uploader.js"></script>
+    <script type="text/javascript" src="[script path]/simditor.js"></script>
+    <style>
+      .mul-select {
+        width: 100%;
+      }
+    </style>
+    <script
+      type="module"
+      src="https://unpkg.com/@freshworks/crayons@2/dist/crayons/crayons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/@freshworks/crayons@2/dist/crayons/crayons.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="richtext.min.css" />
+  </head>
+  <body>
+    <fw-tabs id="tabs">
+      <fw-tab tab-header="Connect Freshdesk" active-tab-index="0">
+        <div class="fw-main-container freshsales-tab">
+          <div class="col-sm-10">
+           
+            <span style="font-family: sans-serif; font-size: 12px; color: black"
+              >Domain</span
+            ><span style="color: #ff0000">*</span><br />
+            <input
+              type="text"
+              name="Domain Name"
+              title="Please fill in this field"
+              class="fs_domain"
+              id="fd_domain"
+              placeholder="Please enter your Freshdesk Domain"
+            />
+            <br /><br />
+
+            <div class="info-icon">
+              <p>Ex:example.freshdesk.com</p>
+            </div>
+            <span style="font-family: sans-serif; font-size: 12px; color: black"
+              >API Key</span
+            ><span style="color: #ff0000">*</span><br />
+            <input
+              type="password"
+              name="apiKey"
+              title="Please fill in this field"
+              class="fs_domain"
+              id="fd_apikey"
+              placeholder="Please enter your Freshdesk API Key"
+            />
+            <br />
+            <br />
+
+            <div class="info-icon example-text">
+              <p>
+                Click on the profile icon in the top-right corner and find your
+                key under API Key option.
+                <a
+                  href="https://support.freshdesk.com/en/support/solutions/articles/215517-how-to-find-your-api-key"
+                  target="_blank"
+                  >Not able to find?</a
+                >
+              </p>
+            </div>
+
+            <fw-button color="primary" class="button-alignment" id="validate">
+              Validate &#10095;
+            </fw-button>
+          </div>
+        </div>
+      </fw-tab>
+      <fw-tab
+        tab-header="Select the Groups"
+        active-tab-index="1"
+        class="tab-header-group"
+        disabled="true"
+      >
+        <div class="fw-main-container freshsales-tab">
+          <div>
+            <div class="col-sm-10">
+              <span
+                style="font-family: sans-serif; font-size: 12px; color: black"
+                >Groups</span
+              ><span style="color: #ff0000">*</span><br />
+              <section class="group-container"></section>
+            </div>
+          </div>
+        </div>
+      </fw-tab>
+    </fw-tabs>
+    <script
+      type="module"
+      src="https://unpkg.com/@freshworks/crayons@2/dist/crayons/crayons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/@freshworks/crayons@2/dist/crayons/crayons.js"
+    ></script>
+    <script src="/path/to/cdn/jquery.min.js"></script>
+    <script src="/path/to/jquery.richtext.min.js"></script>
+    <!-- <script src="https://static.freshdev.io/fdk/2.0/assets/fresh_client.js"></script> -->
+
+    <script src="https://cdn.freshdev.io/assets/app-client@2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <script src="./assets/iparams.js"></script>
+    <script type="text/javascript">
+      var ls = {
+        isValid: false,
+        isFdValid: false,
+        isGroupValid: false,
+      };
+      var elements = {
+        validateBtn: "#validate",
+        fd_domain: "#fd_domain",
+        fd_apikey: "#fd_apikey",
+        groups: "#multiSelectdrop",
+      };
+
+      function getConfigs(configs) {
+        window.configs = configs;
+
+        console.log("windowssssssss", window.configs);
+        ls.isFdValid = true;
+        $(elements.fd_domain).val(configs.fd_domain);
+        $(elements.fd_apikey).val(configs.fd_apikey);
+        $(elements.validateBtn).trigger("click");
+      }
+
+      function validate() {
+        let isValid = true; //for install button
+        console.log(isValid, ls.isFdValid, ls.isGroupValid);
+        if (ls.isFdValid == false && ls.isGroupValid == false) {
+          notify(
+            "Please validate Freshdesk credentials / Select the Group again to Install/Save",
+            "error"
+          );
+        } else if (ls.isFdValid == false) {
+          notify(
+            "Please validate Freshdesk credentials again to Install/Save",
+            "error"
+          );
+        } else if (ls.isGroupValid == false) {
+          notify("Please select atleast one group to Install/Save", "error");
+        }
+        return isValid && ls.isFdValid && ls.isGroupValid; //it should come as true
+        return isValid;
+      }
+      function postConfigs() {
+        authInfo = getInputValues();
+        return {
+          fd_domain: authInfo.fd_domain,
+          fd_apikey: authInfo.fd_apikey,
+          groups: authInfo.groups,
+        };
+      }
+
+      function getInputValues() {
+        return {
+          fd_domain: $(elements.fd_domain).val().trim(),
+          fd_apikey: $(elements.fd_apikey).val().trim(),
+          groups: $(elements.groups).val(),
+        };
+      }
+      function toggleBtnLoader(isLoading) {
+        if (isLoading) {
+          $(elements.validateBtn).html(
+            "<fw-spinner size='small' color='#fff'></fw-spinner>"
+          );
+        } else {
+          $(elements.validateBtn).html(`Validate &#10095;`);
+        }
+      }
+
+      async function fdValidation(event) {
+        event.preventDefault();
+        toggleBtnLoader(true);
+        window.authInfo = getInputValues();
+        console.log("authinfo --->", authInfo);
+        try {
+          Promise.all([freshdeskValidation(authInfo)])
+            .then(async (values) => {
+              console.log(values[0]);
+              if (values[0].response.startsWith("<!DOCTYPE")) {
+                const exception = new Error();
+                exception.name = "Error";
+                exception.response = {
+                  status: 404,
+                  data: {
+                    detail: "Domain Invalid",
+                  },
+                };
+
+                throw exception.response;
+              }
+              const contactFields = JSON.parse(values[0].response);
+
+              await listAllGroups(contactFields);
+              if (window.configs) {
+                window.configs = configs;
+                var methodSelect = document.getElementById("multiSelectdrop");
+                methodSelect.setSelectedValues(configs.groups);
+              }
+              toggleBtnLoader(false);
+              $(elements.validateBtn).html("Validated");
+              $(elements.validateBtn).attr("disabled", true);
+              notify("Freshdesk Validation Successful");
+              ls.isFdValid = true;
+              $(".tab-header-group").prop("disabled", false);
+              switchTab(1);
+            })
+            .catch((error) => {
+              console.log("Error in Freshdesk validation --->", error);
+              console.log("Error in Freshdesk validation --->", error.status);
+
+              if (error.status == 400) {
+                notify("Please enter a valid domain", "error");
+              } else if (error.status == 404) {
+                notify("Please enter a valid domain", "error");
+              } else if (error.status == 401) {
+                notify("Please enter a valid API Key", "error");
+              } else if (error.status == 502) {
+                notify("Error in establishing connection", "error");
+              }
+              toggleBtnLoader(false);
+            });
+        } catch (error) {
+          console.log(error, "err");
+          toggleBtnLoader(false);
+          notify(
+            "Freshdesk Validation Failed! Please check the credentials provided",
+            "error"
+          );
+          ls.isFdValid = false;
+        }
+      }
+
+      async function listAllGroups(response) {
+        $(".group-container").empty();
+        let html = "";
+
+        html += `<fw-select id="multiSelectdrop" placeholder="Your choices" state-text="Select the groups in which the agent unassignment should work" multiple>`;
+        response.map((group) => {
+          html += `<fw-select-option value="${group.id}" >${group.name}</fw-select-option>`;
+        });
+        html += `</fw-select>`;
+
+        $(".group-container").append(html);
+
+        $("#multiSelectdrop").on("fwChange", function (e) {
+          console.log("got the e", e.originalEvent.detail);
+
+          e.originalEvent.detail.value
+            ? (ls.isGroupValid = true)
+            : (ls.isGroupValid = false);
+        });
+      }
+
+      function init() {
+        let { validateBtn, fd_domain, fd_apikey } = elements;
+        $(validateBtn).on("click", fdValidation);
+
+        $(`${fd_domain},${fd_apikey}`).on("keydown", function (event) {
+          ls.isFdValid = false;
+          $(elements.validateBtn).attr("disabled", false);
+          $(elements.validateBtn).html("Validate &#10095;");
+        });
+      }
+      $(document).ready(function () {
+        app.initialized().then(function (client) {
+          window.client = client;
+          console.log(client);
+          init();
+        });
+      });
+    </script>
+  </body>
+</html>

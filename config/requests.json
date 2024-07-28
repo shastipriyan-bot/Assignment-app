@@ -1,0 +1,29 @@
+{
+"freshdeskValidation": {
+      "schema": {
+          "protocol": "https",
+          "method": "GET",
+          "host": "<%= context.host %>",
+          "path": "/api/v2/groups",
+          "headers": {
+              "Authorization": "Basic <%= encode(context.apiKey) %>",
+              "Content-Type": "application/json"
+          }
+      }
+  },
+  
+    "searchOpenTickets": {
+      "schema": {
+        "protocol": "https",
+        "method": "GET",
+        "host": "<%= iparam.fd_domain %>",
+        "path": "<%= context.path %>",
+        
+        "headers": {
+          "Authorization": "Basic <%= encode(iparam.fd_apikey) %>",
+          "Content-Type": "application/json"
+        }
+      }
+    }
+
+}
